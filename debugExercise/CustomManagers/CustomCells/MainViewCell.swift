@@ -43,7 +43,7 @@ class MainViewCell: UITableViewCell {
     }
     
     func setupConstraints() {
-        mainImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        //mainImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         mainImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2).isActive = true
         
         mainImageView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
