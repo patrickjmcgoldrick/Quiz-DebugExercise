@@ -12,7 +12,7 @@ class MainViewCell: UITableViewCell {
 
     let mainImageView: UIImageView = {
         var imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -28,7 +28,8 @@ class MainViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        fatalError("init(coder:) has not been implemented")
+        setupView()
+        //fatalError("init(coder:) has not been implemented")
     }
     
     required init?(coder: NSCoder) {
@@ -36,16 +37,17 @@ class MainViewCell: UITableViewCell {
     }
     
     func setupView() {
+        addSubview(nameHeaderLabel)
         addSubview(mainImageView)
         setupConstraints()
     }
     
     func setupConstraints() {
         mainImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        mainImageView.leadingAnchor.constraint(equalTo: trailingAnchor, constant: 2).isActive = true
+        mainImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2).isActive = true
         
         mainImageView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        mainImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 200).isActive = true
+        mainImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2).isActive = true
         
         mainImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
@@ -53,7 +55,5 @@ class MainViewCell: UITableViewCell {
         nameHeaderLabel.leadingAnchor.constraint(equalTo: mainImageView.trailingAnchor, constant: 5).isActive = true
         nameHeaderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 50).isActive = true
         nameHeaderLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
     }
-
 }

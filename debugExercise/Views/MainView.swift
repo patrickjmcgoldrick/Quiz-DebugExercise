@@ -8,34 +8,11 @@
 
 import UIKit
 
-extension MainView: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = MainViewCell()
-        cell.nameHeaderLabel.text = arrayOfCast?[indexPath.section].text.split(separator: "-").first?.description
-        let urlString = ((arrayOfCast?[indexPath.row].icon.url.isEmpty)! ? arrayOfCast?[indexPath.row].icon.url : "https:/loremflickr.com/640/360")!
-        cell.mainImageView.downloadImageFrom(link: urlString, contentMode: .scaleAspectFit)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewController = DetailViewController()
-        detailViewController.castObject = nil//arrayOfCast?[indexPath.row]
-        controller?.navigationController?.pushViewController(detailViewController, animated: true)
-    }
-}
-
 class MainView: UIView {
     
-    var mainTableView: UITableView = {
+    public var mainTableView: UITableView = {
         var tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         return tableView
     }()
@@ -46,6 +23,7 @@ class MainView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder: NSCoder) {
@@ -57,12 +35,62 @@ class MainView: UIView {
     func setupView() {
         addSubview(mainTableView)
         setupConstraints()
+        
+        mainTableView.delegate = self
+        mainTableView.dataSource = self
+        
     }
     
     func setupConstraints() {
-        mainTableView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        mainTableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = false
-        mainTableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        mainTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        mainTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
+        mainTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
         mainTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
     }
 }
+
+// MARK: TableView Data Source
+extension MainView: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrayOfCast?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = MainViewCell()
+        
+        let cast = arrayOfCast?[indexPath.row]
+        cell.nameHeaderLabel.text = cast?.text.split(separator: "-").first?.description
+        if let urlString = cast?.icon?.url {
+            if !urlString.isEmpty {
+                print(urlString)
+                cell.mainImageView.downloadImageFrom(link: urlString, contentMode: .scaleAspectFit)
+            } else {
+                cell.mainImageView.downloadImageFrom(link: "https:/loremflickr.com/100/100", contentMode:  .scaleAspectFit)
+            }
+        }
+        return cell
+    }
+}
+
+
+// MARK: TableView Delegate
+extension MainView: UITableViewDelegate {
+       
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+   
+        let detailViewController = DetailViewController()
+        detailViewController.castObject = arrayOfCast?[indexPath.row]
+        
+        controller?.navigationController?.pushViewController(detailViewController, animated: true)
+        //controller?.present(detailViewController, animated: true)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+}
+

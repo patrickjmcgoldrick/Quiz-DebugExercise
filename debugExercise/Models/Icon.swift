@@ -9,13 +9,14 @@
 import UIKit
 
 class Icon: Decodable {
-    var url: String
-    var width: String
-    var height: String
+    var url: String?
+    var width: String?
+    var height: String?
     
     private enum CodingKeys : String, CodingKey {
-        case url = "Url"
-        case width = "width"
+        case url = "URL"
+        case width = "Width"
         case height = "Height"
     }
 }
+

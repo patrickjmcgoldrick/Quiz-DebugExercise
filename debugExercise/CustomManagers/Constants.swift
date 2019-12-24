@@ -9,6 +9,6 @@
 import UIKit
 
 struct Constants {
-     static let urlString = "https://api.duckduckgo.com/?q=family+guy+charcters?format=json"
+     static let urlString = "https://api.duckduckgo.com/?q=family+guy+characters&format=json"
 
 }

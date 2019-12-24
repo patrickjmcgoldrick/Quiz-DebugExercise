@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+/*
 class JsonHandler {
     func decodeJson(data: Data) -> [Cast]? {
         let jsonDecoder = JSONDecoder()
@@ -20,3 +20,4 @@ class JsonHandler {
         return nil
     }
 }
+ */

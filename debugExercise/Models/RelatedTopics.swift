@@ -9,9 +9,10 @@
 import UIKit
 
 class RelatedTopics: Decodable {
-    var relatedTopics: [Cast]
+    var relatedTopics: [Cast]?
     
     private enum CodingKeys : String, CodingKey {
-        case relatedTopics = "relatedTopic"
+        case relatedTopics = "RelatedTopics"
     }
 }
+

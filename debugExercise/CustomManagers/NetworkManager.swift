@@ -13,21 +13,34 @@ class NetworkManager {
     
     private init() {}
     
-    func getFamilyGuyCharacters(completion: @escaping ([Cast]) -> ()) {
+    func getFamilyGuyCharacters(completion: @escaping ([Cast]?) -> ()) {
         let url = URL(string: Constants.urlString)
         
-        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let safeUrl = url else { return }
+        
+        let task = URLSession.shared.dataTask(with: safeUrl) { (data, response, error) in
+
             if let error = error {
                 print("error: \(error)")
             } else {
                 if let response = response as? HTTPURLResponse {
                     print("statusCode: \(response.statusCode)")
-                    return
                 }
                 if let data = data {
-                    completion(JsonHandler().decodeJson(data: data)!)
+                    
+                    do {
+                        let jsonDecoder = JSONDecoder()
+
+                        let relatedTopics = try jsonDecoder.decode(RelatedTopics.self, from: data)
+                        
+                        completion(relatedTopics.relatedTopics)
+                        
+                    } catch {
+                        print("Error: \(error.localizedDescription)")
+                    }
                 }
             }
+            
         }
         task.resume()
     }

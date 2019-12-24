@@ -10,9 +10,12 @@ import UIKit
 
 extension UIImageView {
     func downloadImageFrom(link:String, contentMode: UIView.ContentMode) {
-        URLSession.shared.dataTask( with: NSURL(string:"")! as URL, completionHandler: {
+
+        guard let url = URL(string: link) else { return }
+        
+        URLSession.shared.dataTask( with: url, completionHandler: {
             (data, response, error) -> Void in
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 self.contentMode =  contentMode
                 if let data = data { self.image = UIImage(data: data) }
             }

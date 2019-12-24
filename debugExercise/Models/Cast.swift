@@ -9,15 +9,15 @@
 import UIKit
 
 class Cast: Decodable {
-    var result: String
+    var result: String?
     var text: String
-    var icon: Icon
-    var firstUrl: String
+    var icon: Icon?
+    var firstUrl: String?
     
     private enum CodingKeys : String, CodingKey {
         case result = "Result"
         case text = "Text"
-        case icon = "Icons"
+        case icon = "Icon"
         case firstUrl = "FirstUrl"
     }
 }
