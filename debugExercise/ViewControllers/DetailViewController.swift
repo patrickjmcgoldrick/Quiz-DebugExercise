@@ -14,8 +14,13 @@ class DetailViewController: UIViewController {
     var castObject: Cast?
     
     override func viewDidLoad() {
-        
-        detailView.detailImageView.downloadImageFrom(link: (castObject?.icon?.url)!, contentMode: .scaleAspectFill)
+        if let imageUrl = castObject?.icon?.url {
+            if !imageUrl.isEmpty {
+                detailView.detailImageView.downloadImageFrom(link: (castObject?.icon?.url)!, contentMode: .scaleAspectFill)
+            } else {
+                detailView.detailImageView.downloadImageFrom(link: "https:/loremflickr.com/266/200", contentMode:  .scaleAspectFill)
+            }
+        }
         detailView.detailTextLabel.text = castObject?.text.split(separator: "-").last?.description
         view = detailView
  
