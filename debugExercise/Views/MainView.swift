@@ -85,7 +85,6 @@ extension MainView: UITableViewDelegate {
         detailViewController.castObject = arrayOfCast?[indexPath.row]
         
         controller?.navigationController?.pushViewController(detailViewController, animated: true)
-        //controller?.present(detailViewController, animated: true)
         
     }
     
